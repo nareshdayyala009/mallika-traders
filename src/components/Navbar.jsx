@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { useCart } from "../context/CartContext";
+
 import {
   FaBars,
   FaTimes,
@@ -7,9 +9,11 @@ import {
 } from "react-icons/fa";
 import logo from "../assets/logo.png";
 
-function Navbar() {
+function Navbar({ openCart }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { totalItems } = useCart();
+  
 
   useEffect(() => {
     const handleScroll = () => {
@@ -112,9 +116,24 @@ function Navbar() {
 
             {/* Cart */}
 
-            <button className="text-2xl text-slate-700 hover:text-blue-700 transition duration-300">
-              <FaShoppingCart />
-            </button>
+            <button
+  onClick={openCart}
+  className="relative text-2xl text-slate-700 hover:text-blue-700 transition duration-300"
+>
+
+  <FaShoppingCart />
+
+  {totalItems > 0 && (
+
+    <span className="absolute -top-2 -right-3 bg-red-600 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold">
+
+      {totalItems}
+
+    </span>
+
+  )}
+
+</button>
 
             {/* WhatsApp */}
 
